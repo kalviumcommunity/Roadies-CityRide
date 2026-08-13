@@ -59,6 +59,20 @@ Key variables: `ROADIES_ENVIRONMENT`, `ROADIES_RANDOM_SEED`, `ROADIES_DATABASE_U
 
 Configuration is loaded via `from roadies.config import load_settings`.
 
+## Generate Dataset
+
+Generate the synthetic ride-sharing dataset:
+
+```bash
+# Default: 50,000 rides, writes to data/synthetic/rides.csv
+uv run python scripts/generate_dataset.py
+
+# Custom row count and seed
+uv run python scripts/generate_dataset.py --rows 10000 --seed 123
+```
+
+The dataset follows the schema in `docs/data_dictionary.md`. Running with the same seed produces identical output. See `src/roadies/ingestion/generator.py` for the generation logic.
+
 ## Assignment Roadmap
 
 This project follows a 50-assignment roadmap. See [docs/assignments.md](docs/assignments.md) for the full tracker.

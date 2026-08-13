@@ -1,6 +1,6 @@
-# Roadies-CityRide Data Quality — Missing Values
+# Roadies-CityRide Data Quality
 
-> Documents the missing-value policy, field-level rules, and imputation strategies for the ride-sharing dataset.
+> Documents the data quality policies, missing-value handling, and type standardisation for the ride-sharing dataset.
 
 ## Overview
 
@@ -109,3 +109,91 @@ After imputation (or retention of expected nulls), the following checks pass:
 - **All missing values** are expected conditional nulls
 - **0 values imputed** — all nulls are structurally valid
 - **7 fields** contain missing values, all documented in the data dictionary
+
+---
+
+## Data-Type Standardisation
+
+### Overview
+
+The standardisation layer enforces the types defined by the data dictionary so downstream workflows receive predictable data.
+
+### Target Types
+
+| Field | Target Type | Nullable | Notes |
+|---|---|---|---|
+| `ride_id` | string | No | Primary key |
+| `rider_id` | string | No | Foreign key |
+| `driver_id` | string | Yes | Null when no driver assigned |
+| `request_timestamp` | datetime | No | ISO 8601 format |
+| `city` | string | No | Categorical (6 cities) |
+| `accepted` | boolean | No | True/False |
+| `completed` | boolean | No | True/False |
+| `cancelled_by_rider` | boolean | No | True/False |
+| `cancelled_by_driver` | boolean | No | True/False |
+| `cancellation_reason` | string | Yes | Null when not cancelled |
+| `driver_acceptance_rate` | float | Yes | 0.0–1.0 or null |
+| `driver_rating` | float | Yes | 1.0–5.0 or null |
+| `city_hour_requested_rides` | integer | No | 1–500 |
+| `city_hour_available_drivers` | integer | No | 0–300 |
+| `demand_level` | string | No | Categorical (4 levels) |
+| `surge_multiplier` | float | No | 1.0–5.0 |
+| `base_fare` | float | No | 50.0–500.0 INR |
+| `wait_time_minutes` | float | Yes | 0.0–60.0 or null |
+| `trip_duration_minutes` | float | Yes | 0.0–120.0 or null |
+| `trip_distance_km` | float | Yes | 0.0–50.0 or null |
+
+### Conversion Rules
+
+| Input | Output | Rule |
+|---|---|---|
+| `"true"` / `"True"` / `"1"` | `True` | Boolean string mapping |
+| `"false"` / `"False"` / `"0"` | `False` | Boolean string mapping |
+| Numeric string (`"100"`) | `100` | `pd.to_numeric` with coerce |
+| ISO datetime string | `datetime64[ns]` | `pd.to_datetime` with coerce |
+| Already correct type | No change | Skipped |
+
+### Invalid-Value Behaviour
+
+- Conversion failures are reported in `StandardizationResult.conversions`
+- Failed values are accessible via `ColumnConversion.failure_values`
+- The workflow does **not** drop rows with conversion failures
+- Invalid values remain as `NaN` in the output
+
+### Nullable-Field Handling
+
+Nullable fields (`driver_id`, `cancellation_reason`, `driver_acceptance_rate`, `driver_rating`, `wait_time_minutes`, `trip_duration_minutes`, `trip_distance_km`) remain nullable after standardisation. Null values are never imputed during type conversion.
+
+### Workflow
+
+```python
+from roadies.quality.standardize import standardize_dtypes
+from roadies.quality.validator import validate_dataset
+
+# Standardise types
+result = standardize_dtypes(df)
+clean_df = result.df
+
+# Verify
+print(result.summary())
+
+# Validate
+validation = validate_dataset(clean_df)
+assert validation.passed
+```
+
+### Complete Pipeline
+
+```
+load_dataset(...)
+    ↓
+validate_dataset(...)        # structural validation
+    ↓
+standardize_dtypes(...)      # enforce data types
+    ↓
+profile_missing_values(...)  # classify nulls
+    ↓
+impute_missing_values(...)   # apply strategies (keep null by default)
+    ↓
+validate_dataset(...)        # verify post-imputation validity
+```

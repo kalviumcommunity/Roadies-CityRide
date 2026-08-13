@@ -197,3 +197,56 @@ impute_missing_values(...)   # apply strategies (keep null by default)
     ↓
 validate_dataset(...)        # verify post-imputation validity
 ```
+
+---
+
+## Duplicate Detection and Deduplication
+
+### What Counts as a Duplicate
+
+| Type | Definition | Handling |
+|---|---|---|
+| **Exact duplicate row** | All fields identical to another row | Remove redundant copy, keep first |
+| **Duplicate ride ID** | Same `ride_id` appears more than once | Investigate; remove if identical |
+| **Conflicting duplicate** | Same `ride_id` but different field values | Report conflict; keep first occurrence |
+
+### Deduplication Policy
+
+1. **Exact duplicates**: Remove redundant copies. Retain the first occurrence deterministically.
+2. **Duplicate ride IDs (identical)**: Remove redundant copies. Retain the first occurrence.
+3. **Conflicting records**: Do NOT silently discard. Report as conflicts. Retain first occurrence for downstream processing.
+
+### Workflow
+
+```python
+from roadies.quality.deduplication import detect_duplicates, deduplicate_dataset
+
+# Detect only (no changes)
+report = detect_duplicates(df)
+print(report.summary())
+
+# Detect and deduplicate
+result = deduplicate_dataset(df)
+clean_df = result.df
+conflicts = result.conflicts_df  # None if no conflicts
+```
+
+### Complete Pipeline
+
+```
+load_dataset(...)
+    ↓
+validate_dataset(...)        # structural validation
+    ↓
+standardize_dtypes(...)      # enforce data types
+    ↓
+detect_duplicates(...)       # detect without removing
+    ↓
+deduplicate_dataset(...)     # remove exact dups, report conflicts
+    ↓
+profile_missing_values(...)  # classify nulls
+    ↓
+impute_missing_values(...)   # apply strategies
+    ↓
+validate_dataset(...)        # final validation
+```

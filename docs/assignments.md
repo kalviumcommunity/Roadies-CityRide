@@ -29,7 +29,7 @@
 
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
-| 06 | Design Repository Structure and Module Layout | [#6](https://github.com/kalviumcommunity/Roadies-CityRide/issues/6) | Available | — | — |
+| 06 | Design Repository Structure and Module Layout | [#6](https://github.com/kalviumcommunity/Roadies-CityRide/issues/6) | Completed | — | [#51](https://github.com/kalviumcommunity/Roadies-CityRide/pull/51) |
 | 07 | Set Up Python Project with uv and pyproject.toml | [#7](https://github.com/kalviumcommunity/Roadies-CityRide/issues/7) | Available | — | — |
 | 08 | Create Configuration and Environment Management | [#8](https://github.com/kalviumcommunity/Roadies-CityRide/issues/8) | Available | — | — |
 | 09 | Set Up Git Workflow, Branching, and PR Conventions | [#9](https://github.com/kalviumcommunity/Roadies-CityRide/issues/9) | Available | — | — |

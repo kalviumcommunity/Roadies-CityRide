@@ -49,7 +49,7 @@
 
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
-| 16 | Build Dataset Profiling and Quality Assessment | [#16](https://github.com/kalviumcommunity/Roadies-CityRide/issues/16) | Available | — | — |
+| 16 | Build Dataset Profiling and Quality Assessment | [#16](https://github.com/kalviumcommunity/Roadies-CityRide/issues/16) | Completed | — | [#59](https://github.com/kalviumcommunity/Roadies-CityRide/pull/59) |
 | 17 | Implement Missing Value Detection and Imputation | [#17](https://github.com/kalviumcommunity/Roadies-CityRide/issues/17) | Available | — | — |
 | 18 | Enforce Data Types and Standardisation | [#18](https://github.com/kalviumcommunity/Roadies-CityRide/issues/18) | Available | — | — |
 | 19 | Implement Duplicate Detection and Record Deduplication | [#19](https://github.com/kalviumcommunity/Roadies-CityRide/issues/19) | Available | — | — |

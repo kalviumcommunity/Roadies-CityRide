@@ -28,6 +28,25 @@ Roadies-CityRide/
 
 For a detailed explanation of each directory and how it maps to the assignment roadmap, see [docs/architecture.md](docs/architecture.md).
 
+## Development Setup
+
+**Prerequisites:** Python 3.11+ and [uv](https://docs.astral.sh/uv/).
+
+```bash
+# Clone and set up the environment
+git clone https://github.com/kalviumcommunity/Roadies-CityRide.git
+cd Roadies-CityRide
+uv sync
+
+# Run Python through the managed environment
+uv run python -c "import roadies; print(roadies.__file__)"
+
+# Run tests
+uv run pytest
+```
+
+The Python package lives in `src/roadies/`.
+
 ## Assignment Roadmap
 
 This project follows a 50-assignment roadmap. See [docs/assignments.md](docs/assignments.md) for the full tracker.

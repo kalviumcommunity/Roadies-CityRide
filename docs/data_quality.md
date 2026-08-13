@@ -318,3 +318,72 @@ impute_missing_values(...)
     ↓
 validate_dataset(...)
 ```
+
+---
+
+## Date and Time Transformation
+
+### Timestamp Policy
+
+- **Format**: Parsed to Pandas datetime with UTC timezone
+- **Invalid timestamps**: Coerced to `NaT`, reported in `DatetimeTransformReport`
+- **Missing timestamps**: Preserved as `NaT`, counted in report
+- **Timezone**: All timestamps converted to UTC
+
+### Derived Time Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `date` | string | Calendar date (`2025-06-15`) |
+| `year` | Int64 | Year |
+| `month` | Int64 | Month (1–12) |
+| `week` | Int64 | ISO week number |
+| `day_of_month` | Int64 | Day of month (1–31) |
+| `day_of_week` | Int64 | Day of week (0=Mon, 6=Sun) |
+| `day_name` | string | Day name (`Monday`, etc.) |
+| `hour` | Int64 | Hour of day (0–23) |
+| `is_weekend` | boolean | `True` if Saturday or Sunday |
+| `time_period` | string | `night`, `morning`, `afternoon`, or `evening` |
+
+### Time Periods
+
+| Period | Hours |
+|---|---|
+| night | 0–5 |
+| morning | 6–11 |
+| afternoon | 12–16 |
+| evening | 17–20 |
+| night | 21–23 |
+
+### Workflow
+
+```python
+from roadies.quality.datetime_transform import transform_datetime
+
+transformed_df, report = transform_datetime(df)
+print(report.summary())
+```
+
+### Complete Pipeline
+
+```
+load_dataset(...)
+    ↓
+validate_dataset(...)
+    ↓
+clean_strings(...)
+    ↓
+standardize_dtypes(...)
+    ↓
+transform_datetime(...)        # parse timestamps, derive fields
+    ↓
+detect_duplicates(...)
+    ↓
+deduplicate_dataset(...)
+    ↓
+profile_missing_values(...)
+    ↓
+impute_missing_values(...)
+    ↓
+validate_dataset(...)
+```

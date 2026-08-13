@@ -42,7 +42,7 @@
 | 11 | Design Synthetic Dataset Schema | [#11](https://github.com/kalviumcommunity/Roadies-CityRide/issues/11) | Completed | — | [#54](https://github.com/kalviumcommunity/Roadies-CityRide/pull/54) |
 | 12 | Build Reproducible Synthetic Dataset Generator | [#12](https://github.com/kalviumcommunity/Roadies-CityRide/issues/12) | Completed | — | [#55](https://github.com/kalviumcommunity/Roadies-CityRide/pull/55) |
 | 13 | Build CSV/JSON Data Ingestion Pipeline | [#13](https://github.com/kalviumcommunity/Roadies-CityRide/issues/13) | Completed | — | [#56](https://github.com/kalviumcommunity/Roadies-CityRide/pull/56) |
-| 14 | Validate Dataset Sources and Cross-Checks | [#14](https://github.com/kalviumcommunity/Roadies-CityRide/issues/14) | Available | — | — |
+| 14 | Validate Dataset Sources and Cross-Checks | [#14](https://github.com/kalviumcommunity/Roadies-CityRide/issues/14) | Completed | — | [#57](https://github.com/kalviumcommunity/Roadies-CityRide/pull/57) |
 | 15 | Create Data Dictionary and Business Context Mapping | [#15](https://github.com/kalviumcommunity/Roadies-CityRide/issues/15) | Available | — | — |
 
 ## Phase D — Data Quality (Issues #16–#24)

@@ -54,7 +54,7 @@
 | 18 | Enforce Data Types and Standardisation | [#18](https://github.com/kalviumcommunity/Roadies-CityRide/issues/18) | Completed | — | [#61](https://github.com/kalviumcommunity/Roadies-CityRide/pull/61) |
 | 19 | Implement Duplicate Detection and Record Deduplication | [#19](https://github.com/kalviumcommunity/Roadies-CityRide/issues/19) | Available | — | — |
 | 20 | Build String Cleaning and Text Normalisation | [#20](https://github.com/kalviumcommunity/Roadies-CityRide/issues/20) | Completed | — | [#63](https://github.com/kalviumcommunity/Roadies-CityRide/pull/63) |
-| 21 | Build Date and Time Transformation Pipeline | [#21](https://github.com/kalviumcommunity/Roadies-CityRide/issues/21) | Available | — | — |
+| 21 | Build Date and Time Transformation Pipeline | [#21](https://github.com/kalviumcommunity/Roadies-CityRide/issues/21) | Completed | — | [#64](https://github.com/kalviumcommunity/Roadies-CityRide/pull/64) |
 | 22 | Implement Statistical Outlier Detection | [#22](https://github.com/kalviumcommunity/Roadies-CityRide/issues/22) | Available | — | — |
 | 23 | Build Data Consistency and Validation Rules Engine | [#23](https://github.com/kalviumcommunity/Roadies-CityRide/issues/23) | Available | — | — |
 | 24 | Build Multi-Source Merging and Join Validation | [#24](https://github.com/kalviumcommunity/Roadies-CityRide/issues/24) | Available | — | — |

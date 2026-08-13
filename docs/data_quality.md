@@ -250,3 +250,71 @@ impute_missing_values(...)   # apply strategies
     ↓
 validate_dataset(...)        # final validation
 ```
+
+---
+
+## String Cleaning and Text Normalisation
+
+### Fields Affected
+
+| Field | Normalisation | Canonical Form |
+|---|---|---|
+| `city` | Case + whitespace + canonical map | Title case (`Mumbai`, `Delhi`, etc.) |
+| `demand_level` | Case + whitespace + canonical map | Lowercase (`low`, `medium`, `high`, `critical`) |
+| `cancellation_reason` | Case + whitespace + canonical map | Title case (`Long wait time`, etc.) |
+| `ride_id` | Whitespace only | As-is (already clean) |
+| `rider_id` | Whitespace only | As-is (already clean) |
+| `driver_id` | Whitespace only | As-is (already clean) |
+
+### Normalisation Rules
+
+1. **Whitespace**: Strip leading/trailing; collapse repeated internal whitespace
+2. **Case**: Map to canonical form via lookup dictionary
+3. **Textual nulls**: Convert `""`, `" "`, `"NA"`, `"N/A"`, `"null"`, etc. to actual `None`
+
+### Canonical Representations
+
+**Cities**: Mumbai, Delhi, Bangalore, Hyderabad, Chennai, Pune (title case)
+
+**Demand levels**: low, medium, high, critical (lowercase)
+
+**Cancellation reasons**: Long wait time, Driver rude, Changed mind, Vehicle quality, Other (title case)
+
+### Textual Null Handling
+
+The following strings are treated as missing values and converted to `None`:
+
+```
+""  " "  "NA"  "N/A"  "null"  "None"  "NULL"  "nan"  "NaN"  "-"  "n/a"  "na"
+```
+
+### Workflow
+
+```python
+from roadies.quality.string_clean import clean_strings
+
+cleaned_df, report = clean_strings(df)
+print(report.summary())
+```
+
+### Complete Pipeline
+
+```
+load_dataset(...)
+    ↓
+validate_dataset(...)
+    ↓
+clean_strings(...)           # normalise text
+    ↓
+standardize_dtypes(...)
+    ↓
+detect_duplicates(...)
+    ↓
+deduplicate_dataset(...)
+    ↓
+profile_missing_values(...)
+    ↓
+impute_missing_values(...)
+    ↓
+validate_dataset(...)
+```

@@ -39,6 +39,7 @@ Roadies-CityRide/
 ├── src/                       # Reusable Python source code
 │   └── roadies/               # Main package
 │       ├── __init__.py
+│       ├── config.py          # Centralised configuration (Issue #8)
 │       ├── ingestion/         # Data loading and generation (Issues #12-#13)
 │       ├── quality/           # Data cleaning and validation (Issues #16-#24)
 │       ├── features/          # Feature engineering (Issues #25-#30)

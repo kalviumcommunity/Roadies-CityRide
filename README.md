@@ -47,6 +47,18 @@ uv run pytest
 
 The Python package lives in `src/roadies/`.
 
+## Configuration
+
+The project uses environment variables for configuration with sensible defaults. Copy `.env.example` to `.env` and adjust as needed:
+
+```bash
+cp .env.example .env
+```
+
+Key variables: `ROADIES_ENVIRONMENT`, `ROADIES_RANDOM_SEED`, `ROADIES_DATABASE_URL`. See `.env.example` for the full list.
+
+Configuration is loaded via `from roadies.config import load_settings`.
+
 ## Assignment Roadmap
 
 This project follows a 50-assignment roadmap. See [docs/assignments.md](docs/assignments.md) for the full tracker.

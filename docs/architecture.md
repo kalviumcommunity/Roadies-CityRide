@@ -41,7 +41,7 @@ Roadies-CityRide/
 │       ├── __init__.py
 │       ├── config.py          # Centralised configuration (Issue #8)
 │       ├── ingestion/         # Data loading and generation (Issues #12-#13)
-│       ├── quality/           # Data cleaning and validation (Issues #16-#24)
+│   ├── quality/           # Data cleaning and validation (Issues #14-#24)
 │       ├── features/          # Feature engineering (Issues #25-#30)
 │       ├── analysis/          # Python analysis and NumPy (Issues #31-#40)
 │       ├── database/          # SQL integration (Issues #41-#45)
@@ -124,7 +124,7 @@ data/raw/          (original files)
       ↓
 src/roadies/ingestion/     (load into DataFrames)
       ↓
-src/roadies/quality/       (clean, validate, profile)
+src/roadies/quality/       (validate schema, check integrity, clean, profile)
       ↓
 data/processed/    (cleaned data)
       ↓

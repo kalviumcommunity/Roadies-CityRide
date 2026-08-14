@@ -63,7 +63,7 @@
 
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
-| 25 | Engineer Demand and Supply Features | [#25](https://github.com/kalviumcommunity/Roadies-CityRide/issues/25) | Available | — | — |
+| 25 | Engineer Demand and Supply Features | [#25](https://github.com/kalviumcommunity/Roadies-CityRide/issues/25) | Completed | — | [#68](https://github.com/kalviumcommunity/Roadies-CityRide/pull/68) |
 | 26 | Engineer Surge Pricing Features | [#26](https://github.com/kalviumcommunity/Roadies-CityRide/issues/26) | Available | — | — |
 | 27 | Engineer Driver Acceptance Features | [#27](https://github.com/kalviumcommunity/Roadies-CityRide/issues/27) | Available | — | — |
 | 28 | Engineer Rider Cancellation Features | [#28](https://github.com/kalviumcommunity/Roadies-CityRide/issues/28) | Available | — | — |

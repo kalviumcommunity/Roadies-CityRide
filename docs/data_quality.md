@@ -433,3 +433,51 @@ from roadies.quality.outlier import detect_outliers
 report = detect_outliers(df)
 print(report.summary())
 ```
+
+---
+
+## Data Consistency Validation
+
+### Purpose
+
+Consistency validation checks whether combinations of field values make business
+sense together. This is separate from schema validation (which checks individual
+field values).
+
+### Rules Implemented
+
+| Rule ID | Description | Severity |
+|---|---|---|
+| `ride_outcome_01` | Completed ride must have an accepted driver | critical |
+| `ride_outcome_02` | Completed ride must not have rider cancellation | critical |
+| `ride_outcome_03` | Completed ride must not have driver cancellation | critical |
+| `ride_outcome_04` | Cancelled ride must have a cancellation reason | high |
+| `ride_outcome_05` | Cancellation reason null when not cancelled | medium |
+| `driver_01` | Driver rating only when driver is assigned | medium |
+| `time_01` | Wait time non-negative | high |
+| `time_02` | Trip duration non-negative | high |
+| `time_03` | Trip distance non-negative | high |
+| `pricing_01` | Surge multiplier between 1.0 and 5.0 | high |
+| `pricing_02` | Base fare non-negative | high |
+| `demand_01` | Requested rides non-negative | high |
+| `demand_02` | Available drivers non-negative | high |
+
+### Severity Levels
+
+- **critical**: Data integrity issue, likely a bug
+- **high**: Significant business logic violation
+- **medium**: Unusual but possibly explainable
+
+### Non-Correction Policy
+
+Violations are reported only. They are never automatically fixed, deleted,
+or overwritten.
+
+### Workflow
+
+```python
+from roadies.quality.consistency import validate_consistency
+
+report = validate_consistency(df)
+print(report.summary())
+```

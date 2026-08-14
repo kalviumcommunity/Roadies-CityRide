@@ -184,6 +184,11 @@ These fields are **not** in the raw dataset. They are computed later.
 | `driver_availability_rate` | float | `available / (requested + available)` | proportion (0–1) | Supply share of total | Normalized supply measure |
 | `demand_surplus` | float | `requested - available` | count | Excess demand over supply | Shortage indicator |
 | `surge_pressure` | float | `max(0, surplus / requested)` | proportion (0–1) | Normalized demand surplus | Surge likelihood indicator |
+| `surge_deviation` | float | `surge_multiplier - 1.0` | multiplier units | Deviation from no-surge baseline | Surge level measure |
+| `surge_intensity` | float | `(surge_multiplier - 1.0) / 4.0` | proportion (0–1) | Normalized surge (0=no surge, 1=max) | Surge level measure |
+| `surge_category` | string | categorical band | category | no_surge, low, moderate, high | Surge segmentation |
+| `has_surge` | boolean | `surge_multiplier > 1.0` | boolean | Whether surge pricing is active | Surge flag |
+| `surge_to_demand_ratio` | float | `surge_multiplier / demand_supply_ratio` | ratio | Surge relative to demand pressure | Combined metric |
 | `estimated_fare` | float | `base_fare * surge_multiplier` | INR | Estimated fare with surge applied | Fare analysis |
 | `is_high_demand` | boolean | Demand percentile ranking | — | `true` if city-hour demand is above 80th percentile | High-demand period classification |
 | `experience_score` | float | Weighted combination of wait time, completion, cancellation | 0.0–1.0 | Composite rider experience metric | Overall experience measurement |

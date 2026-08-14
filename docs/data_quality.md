@@ -387,3 +387,49 @@ impute_missing_values(...)
     ↓
 validate_dataset(...)
 ```
+
+---
+
+## Statistical Outlier Detection
+
+### Why Detect Outliers?
+
+Outlier detection flags statistically unusual observations for investigation.
+Detected outliers are **not** automatically removed or modified — they are signals
+for analysts to review.
+
+### Fields Analysed
+
+| Field | Method | Rationale |
+|---|---|---|
+| `surge_multiplier` | IQR | Ordinal, bounded expected range |
+| `wait_time_minutes` | IQR | Right-skewed operational metric |
+| `trip_duration_minutes` | IQR | Right-skewed operational metric |
+| `driver_rating` | IQR | Bounded scale (1–5) |
+| `city_hour_available_drivers` | IQR | Count data, skewed |
+| `city_hour_requested_rides` | IQR | Count data, skewed |
+| `driver_acceptance_rate` | IQR | Bounded rate (0–1) |
+| `base_fare` | Z-score | Approximately continuous |
+| `trip_distance_km` | Z-score | Approximately continuous |
+
+### Methods
+
+**IQR**: Flag values outside Q1 − 1.5 × IQR or Q3 + 1.5 × IQR
+
+**Z-score**: Flag values with |z| > 3 (3 standard deviations from mean)
+
+### Non-Modifying Policy
+
+Detected outliers are reported only. They are never:
+- Deleted
+- Replaced with mean/median
+- Clipped or winsorised
+
+### Workflow
+
+```python
+from roadies.quality.outlier import detect_outliers
+
+report = detect_outliers(df)
+print(report.summary())
+```

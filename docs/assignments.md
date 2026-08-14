@@ -57,7 +57,7 @@
 | 21 | Build Date and Time Transformation Pipeline | [#21](https://github.com/kalviumcommunity/Roadies-CityRide/issues/21) | Completed | — | [#64](https://github.com/kalviumcommunity/Roadies-CityRide/pull/64) |
 | 22 | Implement Statistical Outlier Detection | [#22](https://github.com/kalviumcommunity/Roadies-CityRide/issues/22) | Completed | — | [#65](https://github.com/kalviumcommunity/Roadies-CityRide/pull/65) |
 | 23 | Build Data Consistency and Validation Rules Engine | [#23](https://github.com/kalviumcommunity/Roadies-CityRide/issues/23) | Completed | — | [#66](https://github.com/kalviumcommunity/Roadies-CityRide/pull/66) |
-| 24 | Build Multi-Source Merging and Join Validation | [#24](https://github.com/kalviumcommunity/Roadies-CityRide/issues/24) | Available | — | — |
+| 24 | Build Multi-Source Merging and Join Validation | [#24](https://github.com/kalviumcommunity/Roadies-CityRide/issues/24) | Completed | — | [#67](https://github.com/kalviumcommunity/Roadies-CityRide/pull/67) |
 
 ## Phase E — Feature Engineering (Issues #25–#30)
 

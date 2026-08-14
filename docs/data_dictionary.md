@@ -178,6 +178,12 @@ These fields are **not** in the raw dataset. They are computed later.
 | `day_of_week` | string | `request_timestamp` | — | Day name (`Monday`–`Sunday`) | Weekly pattern analysis |
 | `is_weekend` | boolean | `day_of_week` | — | `true` if Saturday or Sunday | Weekend vs weekday comparison |
 | `supply_ratio` | float | `city_hour_available_drivers / city_hour_requested_rides` | drivers/request | Drivers per request | Supply-demand balance metric |
+| `demand_supply_ratio` | float | `city_hour_requested_rides / city_hour_available_drivers` | rides/driver | Rides per available driver | Demand pressure metric |
+| `supply_pressure` | float | `city_hour_available_drivers / city_hour_requested_rides` | drivers/driver | Drivers per requested ride | Supply availability metric |
+| `demand_intensity` | float | `requested / (requested + available)` | proportion (0–1) | Demand share of total | Normalized demand measure |
+| `driver_availability_rate` | float | `available / (requested + available)` | proportion (0–1) | Supply share of total | Normalized supply measure |
+| `demand_surplus` | float | `requested - available` | count | Excess demand over supply | Shortage indicator |
+| `surge_pressure` | float | `max(0, surplus / requested)` | proportion (0–1) | Normalized demand surplus | Surge likelihood indicator |
 | `estimated_fare` | float | `base_fare * surge_multiplier` | INR | Estimated fare with surge applied | Fare analysis |
 | `is_high_demand` | boolean | Demand percentile ranking | — | `true` if city-hour demand is above 80th percentile | High-demand period classification |
 | `experience_score` | float | Weighted combination of wait time, completion, cancellation | 0.0–1.0 | Composite rider experience metric | Overall experience measurement |

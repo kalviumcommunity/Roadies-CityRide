@@ -481,3 +481,54 @@ from roadies.quality.consistency import validate_consistency
 report = validate_consistency(df)
 print(report.summary())
 ```
+
+---
+
+## Multi-Source Merging & Join Validation
+
+### Purpose
+
+Safely combine related datasets and validate that joins preserve data integrity
+and expected cardinality.
+
+### Supported Join Scenarios
+
+| Scenario | Left | Right | Keys | Type |
+|---|---|---|---|---|
+| City enrichment | rides | cities | `city` | many-to-one |
+| Driver enrichment | rides | drivers | `driver_id` | many-to-one |
+| City-hour context | rides | city_hour | `city`, `hour` | many-to-one |
+
+### Join Validation Checks
+
+- Left/right row counts
+- Result row count
+- Unmatched left records
+- Unmatched right records
+- Duplicate keys (left/right)
+- Row multiplication detection
+- Match percentage
+
+### Duplicate Key Handling
+
+Duplicate keys in the right table cause row multiplication. This is detected
+and flagged in the report. For many-to-one joins, the right table should have
+unique keys.
+
+### Unmatched Record Handling
+
+Unmatched records are counted and reported. For left joins, unmatched left
+records receive null right columns. Unmatched right records are reported but
+do not affect the result row count.
+
+### Workflow
+
+```python
+from roadies.quality.join_validation import merge_and_validate
+
+result = merge_and_validate(rides_df, cities_df, on=["city"], how="left")
+print(result.summary())
+
+# Or just merge
+merged = merge_datasets(rides_df, cities_df, on=["city"])
+```

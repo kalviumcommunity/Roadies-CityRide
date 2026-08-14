@@ -189,6 +189,11 @@ These fields are **not** in the raw dataset. They are computed later.
 | `surge_category` | string | categorical band | category | no_surge, low, moderate, high | Surge segmentation |
 | `has_surge` | boolean | `surge_multiplier > 1.0` | boolean | Whether surge pricing is active | Surge flag |
 | `surge_to_demand_ratio` | float | `surge_multiplier / demand_supply_ratio` | ratio | Surge relative to demand pressure | Combined metric |
+| `was_accepted` | boolean | `accepted == true` | boolean | Whether this ride was accepted | Acceptance flag |
+| `was_not_accepted` | boolean | `accepted == false` | boolean | Whether this ride was NOT accepted | Rejection flag |
+| `acceptance_rate_deviation` | float | `driver_acceptance_rate - 0.80` | proportion (-1 to 1) | Deviation from baseline acceptance rate | Driver behaviour metric |
+| `acceptance_rate_band` | string | categorical band | category | well_above, above, near_baseline, below, well_below | Acceptance rate segmentation |
+| `has_driver` | boolean | `driver_id is not null` | boolean | Whether a driver was assigned | Driver assignment flag |
 | `estimated_fare` | float | `base_fare * surge_multiplier` | INR | Estimated fare with surge applied | Fare analysis |
 | `is_high_demand` | boolean | Demand percentile ranking | — | `true` if city-hour demand is above 80th percentile | High-demand period classification |
 | `experience_score` | float | Weighted combination of wait time, completion, cancellation | 0.0–1.0 | Composite rider experience metric | Overall experience measurement |

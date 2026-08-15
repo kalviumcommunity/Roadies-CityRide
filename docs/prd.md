@@ -1,7 +1,7 @@
 # Product Requirements Document (PRD): Roadies-CityRide Analytics
 
 ## Problem Statement
-Roadies-CityRide is experiencing challenges with rider satisfaction during peak hours. The goal of this data product is to identify, analyze, and visualize the specific factors contributing to rider experience degradation so the operations team can take targeted corrective actions.
+As outlined in the project [README](../README.md), Roadies-CityRide is experiencing challenges with rider satisfaction during peak hours. The goal of this data product is to identify, analyze, and visualize the specific factors contributing to rider experience degradation so the operations team can take targeted corrective actions.
 
 ## Success Criteria
 - Deliver a fully functional Streamlit dashboard that visualizes the metrics of rider experience degradation.

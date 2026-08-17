@@ -66,7 +66,7 @@
 | 25 | Engineer Demand and Supply Features | [#25](https://github.com/kalviumcommunity/Roadies-CityRide/issues/25) | Completed | — | [#68](https://github.com/kalviumcommunity/Roadies-CityRide/pull/68) |
 | 26 | Engineer Surge Pricing Features | [#26](https://github.com/kalviumcommunity/Roadies-CityRide/issues/26) | Completed | — | [#69](https://github.com/kalviumcommunity/Roadies-CityRide/pull/69) |
 | 27 | Engineer Driver Acceptance Features | [#27](https://github.com/kalviumcommunity/Roadies-CityRide/issues/27) | Completed | — | [#70](https://github.com/kalviumcommunity/Roadies-CityRide/pull/70) |
-| 28 | Engineer Rider Cancellation Features | [#28](https://github.com/kalviumcommunity/Roadies-CityRide/issues/28) | Available | — | — |
+| 28 | Engineer Rider Cancellation Features | [#28](https://github.com/kalviumcommunity/Roadies-CityRide/issues/28) | Completed | — | [#72](https://github.com/kalviumcommunity/Roadies-CityRide/pull/72) |
 | 29 | Engineer Rider Experience Score Features | [#29](https://github.com/kalviumcommunity/Roadies-CityRide/issues/29) | Available | — | — |
 | 30 | Define High-Demand Period Classification | [#30](https://github.com/kalviumcommunity/Roadies-CityRide/issues/30) | Available | — | — |
 

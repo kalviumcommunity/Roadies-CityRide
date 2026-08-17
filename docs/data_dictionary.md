@@ -194,6 +194,13 @@ These fields are **not** in the raw dataset. They are computed later.
 | `acceptance_rate_deviation` | float | `driver_acceptance_rate - 0.80` | proportion (-1 to 1) | Deviation from baseline acceptance rate | Driver behaviour metric |
 | `acceptance_rate_band` | string | categorical band | category | well_above, above, near_baseline, below, well_below | Acceptance rate segmentation |
 | `has_driver` | boolean | `driver_id is not null` | boolean | Whether a driver was assigned | Driver assignment flag |
+| `rider_cancelled` | boolean | `cancelled_by_rider == true` | boolean | Whether the rider cancelled | Rider cancellation flag |
+| `driver_cancelled` | boolean | `cancelled_by_driver == true` | boolean | Whether the driver cancelled | Driver cancellation flag |
+| `any_cancelled` | boolean | `cancelled_by_rider OR cancelled_by_driver` | boolean | Whether any party cancelled | Cancellation flag |
+| `has_cancellation_reason` | boolean | `cancellation_reason is not null` | boolean | Whether a reason is recorded | Reason availability flag |
+| `cancellation_reason_category` | string | mapped from reason | category | wait_related, driver_behaviour, rider_decision, vehicle_related, other, unknown | Reason business category |
+| `cancelled_before_acceptance` | boolean | `rider_cancelled AND NOT accepted` | boolean | Rider cancelled before acceptance | Pre-acceptance cancellation |
+| `cancelled_after_acceptance` | boolean | `(rider OR driver cancelled) AND accepted` | boolean | Cancellation after acceptance | Post-acceptance cancellation |
 | `estimated_fare` | float | `base_fare * surge_multiplier` | INR | Estimated fare with surge applied | Fare analysis |
 | `is_high_demand` | boolean | Demand percentile ranking | — | `true` if city-hour demand is above 80th percentile | High-demand period classification |
 | `experience_score` | float | Weighted combination of wait time, completion, cancellation | 0.0–1.0 | Composite rider experience metric | Overall experience measurement |

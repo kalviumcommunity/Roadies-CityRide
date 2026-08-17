@@ -201,6 +201,12 @@ These fields are **not** in the raw dataset. They are computed later.
 | `cancellation_reason_category` | string | mapped from reason | category | wait_related, driver_behaviour, rider_decision, vehicle_related, other, unknown | Reason business category |
 | `cancelled_before_acceptance` | boolean | `rider_cancelled AND NOT accepted` | boolean | Rider cancelled before acceptance | Pre-acceptance cancellation |
 | `cancelled_after_acceptance` | boolean | `(rider OR driver cancelled) AND accepted` | boolean | Cancellation after acceptance | Post-acceptance cancellation |
+| `wait_time_severity` | string | categorical band | category | low (<5m), moderate (5-15m), high (15-30m), severe (>30m) | Wait-time severity level |
+| `ride_completed` | boolean | `completed == true` | boolean | Whether ride completed | Completion flag |
+| `ride_not_completed` | boolean | `completed == false` | boolean | Whether ride did NOT complete | Non-completion flag |
+| `cancellation_type` | string | categorical | category | none, rider, driver | Type of cancellation |
+| `surge_exposure` | string | categorical band | category | none (1.0x), low (1.0-1.5x), moderate (1.5-2.5x), high (>2.5x) | Surge pricing exposure |
+| `experience_status` | string | rule-based classification | category | completed_good, completed_elevated_wait, completed_high_surge, rider_cancelled, driver_cancelled, not_accepted, unknown | Transparent experience classification |
 | `estimated_fare` | float | `base_fare * surge_multiplier` | INR | Estimated fare with surge applied | Fare analysis |
 | `is_high_demand` | boolean | Demand percentile ranking | — | `true` if city-hour demand is above 80th percentile | High-demand period classification |
 | `experience_score` | float | Weighted combination of wait time, completion, cancellation | 0.0–1.0 | Composite rider experience metric | Overall experience measurement |

@@ -207,8 +207,10 @@ These fields are **not** in the raw dataset. They are computed later.
 | `cancellation_type` | string | categorical | category | none, rider, driver | Type of cancellation |
 | `surge_exposure` | string | categorical band | category | none (1.0x), low (1.0-1.5x), moderate (1.5-2.5x), high (>2.5x) | Surge pricing exposure |
 | `experience_status` | string | rule-based classification | category | completed_good, completed_elevated_wait, completed_high_surge, rider_cancelled, driver_cancelled, not_accepted, unknown | Transparent experience classification |
+| `demand_percentile` | float | percentile rank of city_hour_requested_rides | proportion (0-1) | Percentile rank of demand measure | Demand ranking |
+| `is_high_demand` | boolean | `demand >= 80th percentile` | boolean | Whether ride is in high-demand period | High-demand flag |
+| `demand_period` | string | categorical band | category | low (<50th), normal (50th-80th), high (>=80th) | Demand period classification |
 | `estimated_fare` | float | `base_fare * surge_multiplier` | INR | Estimated fare with surge applied | Fare analysis |
-| `is_high_demand` | boolean | Demand percentile ranking | — | `true` if city-hour demand is above 80th percentile | High-demand period classification |
 | `experience_score` | float | Weighted combination of wait time, completion, cancellation | 0.0–1.0 | Composite rider experience metric | Overall experience measurement |
 
 ---

@@ -67,7 +67,7 @@
 | 26 | Engineer Surge Pricing Features | [#26](https://github.com/kalviumcommunity/Roadies-CityRide/issues/26) | Completed | — | [#69](https://github.com/kalviumcommunity/Roadies-CityRide/pull/69) |
 | 27 | Engineer Driver Acceptance Features | [#27](https://github.com/kalviumcommunity/Roadies-CityRide/issues/27) | Completed | — | [#70](https://github.com/kalviumcommunity/Roadies-CityRide/pull/70) |
 | 28 | Engineer Rider Cancellation Features | [#28](https://github.com/kalviumcommunity/Roadies-CityRide/issues/28) | Completed | — | [#72](https://github.com/kalviumcommunity/Roadies-CityRide/pull/72) |
-| 29 | Engineer Rider Experience Score Features | [#29](https://github.com/kalviumcommunity/Roadies-CityRide/issues/29) | Available | — | — |
+| 29 | Engineer Rider Experience Score Features | [#29](https://github.com/kalviumcommunity/Roadies-CityRide/issues/29) | Completed | — | [#73](https://github.com/kalviumcommunity/Roadies-CityRide/pull/73) |
 | 30 | Define High-Demand Period Classification | [#30](https://github.com/kalviumcommunity/Roadies-CityRide/issues/30) | Available | — | — |
 
 ## Phase F — Python Analysis (Issues #31–#40)

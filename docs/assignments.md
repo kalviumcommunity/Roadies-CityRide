@@ -74,7 +74,7 @@
 
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
-| 31 | Analyse Feature Distributions for Business Trends | [#31](https://github.com/kalviumcommunity/Roadies-CityRide/issues/31) | Available | — | — |
+| 31 | Analyse Feature Distributions for Business Trends | [#31](https://github.com/kalviumcommunity/Roadies-CityRide/issues/31) | Completed | — | [#75](https://github.com/kalviumcommunity/Roadies-CityRide/pull/75) |
 | 32 | Perform Correlation and Relationship Analysis | [#32](https://github.com/kalviumcommunity/Roadies-CityRide/issues/32) | Available | — | — |
 | 33 | Build City Segmentation and Comparison Analysis | [#33](https://github.com/kalviumcommunity/Roadies-CityRide/issues/33) | Available | — | — |
 | 34 | Perform GroupBy Aggregation and Segment Insights | [#34](https://github.com/kalviumcommunity/Roadies-CityRide/issues/34) | Available | — | — |

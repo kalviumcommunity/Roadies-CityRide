@@ -77,7 +77,7 @@
 | 31 | Analyse Feature Distributions for Business Trends | [#31](https://github.com/kalviumcommunity/Roadies-CityRide/issues/31) | Completed | — | [#75](https://github.com/kalviumcommunity/Roadies-CityRide/pull/75) |
 | 32 | Perform Correlation and Relationship Analysis | [#32](https://github.com/kalviumcommunity/Roadies-CityRide/issues/32) | Completed | — | [#77](https://github.com/kalviumcommunity/Roadies-CityRide/pull/77) |
 | 33 | Build City Segmentation and Comparison Analysis | [#33](https://github.com/kalviumcommunity/Roadies-CityRide/issues/33) | Completed | — | [#78](https://github.com/kalviumcommunity/Roadies-CityRide/pull/78) |
-| 34 | Perform GroupBy Aggregation and Segment Insights | [#34](https://github.com/kalviumcommunity/Roadies-CityRide/issues/34) | Available | — | — |
+| 34 | Perform GroupBy Aggregation and Segment Insights | [#34](https://github.com/kalviumcommunity/Roadies-CityRide/issues/34) | Completed | — | [#79](https://github.com/kalviumcommunity/Roadies-CityRide/pull/79) |
 | 35 | Perform Time-Series Trend and Rolling Metrics Analysis | [#35](https://github.com/kalviumcommunity/Roadies-CityRide/issues/35) | Available | — | — |
 | 36 | Perform Behavioural Analysis and User Segmentation | [#36](https://github.com/kalviumcommunity/Roadies-CityRide/issues/36) | Available | — | — |
 | 37 | Perform Funnel Analysis and Drop-Off Detection | [#37](https://github.com/kalviumcommunity/Roadies-CityRide/issues/37) | Available | — | — |

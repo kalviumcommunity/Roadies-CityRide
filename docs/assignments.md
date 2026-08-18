@@ -79,7 +79,7 @@
 | 33 | Build City Segmentation and Comparison Analysis | [#33](https://github.com/kalviumcommunity/Roadies-CityRide/issues/33) | Completed | — | [#78](https://github.com/kalviumcommunity/Roadies-CityRide/pull/78) |
 | 34 | Perform GroupBy Aggregation and Segment Insights | [#34](https://github.com/kalviumcommunity/Roadies-CityRide/issues/34) | Completed | — | [#79](https://github.com/kalviumcommunity/Roadies-CityRide/pull/79) |
 | 35 | Perform Time-Series Trend and Rolling Metrics Analysis | [#35](https://github.com/kalviumcommunity/Roadies-CityRide/issues/35) | Completed | — | [#80](https://github.com/kalviumcommunity/Roadies-CityRide/pull/80) |
-| 36 | Perform Behavioural Analysis and User Segmentation | [#36](https://github.com/kalviumcommunity/Roadies-CityRide/issues/36) | Available | — | — |
+| 36 | Perform Behavioural Analysis and User Segmentation | [#36](https://github.com/kalviumcommunity/Roadies-CityRide/issues/36) | Completed | — | [#81](https://github.com/kalviumcommunity/Roadies-CityRide/pull/81) |
 | 37 | Perform Funnel Analysis and Drop-Off Detection | [#37](https://github.com/kalviumcommunity/Roadies-CityRide/issues/37) | Available | — | — |
 | 38 | Perform Root-Cause Investigation of Degraded Cities | [#38](https://github.com/kalviumcommunity/Roadies-CityRide/issues/38) | Available | — | — |
 | 39 | Perform NumPy Vectorised Computation Workflow | [#39](https://github.com/kalviumcommunity/Roadies-CityRide/issues/39) | Available | — | — |

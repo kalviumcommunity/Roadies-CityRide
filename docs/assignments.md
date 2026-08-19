@@ -82,7 +82,7 @@
 | 36 | Perform Behavioural Analysis and User Segmentation | [#36](https://github.com/kalviumcommunity/Roadies-CityRide/issues/36) | Completed | — | [#81](https://github.com/kalviumcommunity/Roadies-CityRide/pull/81) |
 | 37 | Perform Funnel Analysis and Drop-Off Detection | [#37](https://github.com/kalviumcommunity/Roadies-CityRide/issues/37) | Completed | — | [#82](https://github.com/kalviumcommunity/Roadies-CityRide/pull/82) |
 | 38 | Perform Root-Cause Investigation of Degraded Cities | [#38](https://github.com/kalviumcommunity/Roadies-CityRide/issues/38) | Completed | — | [#83](https://github.com/kalviumcommunity/Roadies-CityRide/pull/83) |
-| 39 | Perform NumPy Vectorised Computation Workflow | [#39](https://github.com/kalviumcommunity/Roadies-CityRide/issues/39) | Available | — | — |
+| 39 | Detect Anomalies and Operational Risk Patterns | [#39](https://github.com/kalviumcommunity/Roadies-CityRide/issues/39) | Completed | — | [#84](https://github.com/kalviumcommunity/Roadies-CityRide/pull/84) |
 | 40 | Detect Anomalies and Operational Risk Patterns | [#40](https://github.com/kalviumcommunity/Roadies-CityRide/issues/40) | Available | — | — |
 
 ## Phase G — SQL Analytics (Issues #41–#45)

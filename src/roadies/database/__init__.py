@@ -235,3 +235,189 @@ def list_tables(db_path: Path | str = DEFAULT_DB_PATH) -> list[str]:
         db_path,
     )
     return result["name"].tolist()
+
+
+# ---------------------------------------------------------------------------
+# Business metrics queries
+# ---------------------------------------------------------------------------
+
+QUERIES_PATH = Path("sql/queries")
+
+
+def execute_metric_query(
+    query_name: str,
+    db_path: Path | str = DEFAULT_DB_PATH,
+    queries_path: Path | str = QUERIES_PATH,
+) -> pd.DataFrame:
+    """Execute a named metric query from the SQL queries directory.
+
+    Parameters
+    ----------
+    query_name:
+        Name of the query (e.g., 'core_metrics', 'city_metrics').
+    db_path:
+        Path to SQLite database.
+    queries_path:
+        Path to SQL queries directory.
+
+    Returns
+    -------
+    pd.DataFrame
+        Query results.
+    """
+    queries_path = Path(queries_path)
+
+    # Map query names to SQL statements
+    query_map = {
+        "core_metrics": _core_metrics_sql(),
+        "city_metrics": _city_metrics_sql(),
+        "demand_comparison": _demand_comparison_sql(),
+        "daily_metrics": _daily_metrics_sql(),
+        "hourly_metrics": _hourly_metrics_sql(),
+        "city_deterioration": _city_deterioration_sql(),
+    }
+
+    sql = query_map.get(query_name)
+    if sql is None:
+        raise ValueError(f"Unknown query: {query_name}")
+
+    return query(sql, db_path)
+
+
+def _core_metrics_sql() -> str:
+    return """
+    SELECT
+        COUNT(*) AS total_rides,
+        SUM(was_accepted) AS accepted_rides,
+        SUM(ride_completed) AS completed_rides,
+        SUM(rider_cancelled) AS rider_cancellations,
+        SUM(driver_cancelled) AS driver_cancellations,
+        ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS acceptance_rate,
+        ROUND(SUM(ride_completed) * 100.0 / COUNT(*), 2) AS completion_rate,
+        ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS rider_cancel_rate,
+        ROUND(SUM(driver_cancelled) * 100.0 / COUNT(*), 2) AS driver_cancel_rate,
+        ROUND(AVG(wait_time_minutes), 2) AS avg_wait_time,
+        ROUND(AVG(surge_multiplier), 2) AS avg_surge,
+        ROUND(AVG(demand_supply_ratio), 2) AS avg_demand_supply_ratio,
+        ROUND(SUM(CASE WHEN is_high_demand = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS high_demand_share
+    FROM rides
+    """
+
+
+def _city_metrics_sql() -> str:
+    return """
+    SELECT
+        city,
+        COUNT(*) AS ride_volume,
+        ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS acceptance_rate,
+        ROUND(SUM(ride_completed) * 100.0 / COUNT(*), 2) AS completion_rate,
+        ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS rider_cancel_rate,
+        ROUND(SUM(driver_cancelled) * 100.0 / COUNT(*), 2) AS driver_cancel_rate,
+        ROUND(AVG(wait_time_minutes), 2) AS avg_wait_time,
+        ROUND(AVG(surge_multiplier), 2) AS avg_surge,
+        ROUND(AVG(demand_supply_ratio), 2) AS avg_demand_supply_ratio,
+        ROUND(SUM(CASE WHEN is_high_demand = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS high_demand_share
+    FROM rides
+    GROUP BY city
+    ORDER BY ride_volume DESC
+    """
+
+
+def _demand_comparison_sql() -> str:
+    return """
+    SELECT
+        CASE WHEN is_high_demand = 1 THEN 'high' ELSE 'normal' END AS demand_period,
+        COUNT(*) AS ride_count,
+        ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS acceptance_rate,
+        ROUND(SUM(ride_completed) * 100.0 / COUNT(*), 2) AS completion_rate,
+        ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS rider_cancel_rate,
+        ROUND(SUM(driver_cancelled) * 100.0 / COUNT(*), 2) AS driver_cancel_rate,
+        ROUND(AVG(wait_time_minutes), 2) AS avg_wait_time,
+        ROUND(AVG(surge_multiplier), 2) AS avg_surge,
+        ROUND(AVG(demand_supply_ratio), 2) AS avg_demand_supply_ratio
+    FROM rides
+    GROUP BY is_high_demand
+    ORDER BY is_high_demand
+    """
+
+
+def _daily_metrics_sql() -> str:
+    return """
+    SELECT
+        DATE(request_timestamp) AS ride_date,
+        COUNT(*) AS ride_count,
+        ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS acceptance_rate,
+        ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS rider_cancel_rate,
+        ROUND(AVG(wait_time_minutes), 2) AS avg_wait_time,
+        ROUND(AVG(surge_multiplier), 2) AS avg_surge
+    FROM rides
+    GROUP BY DATE(request_timestamp)
+    ORDER BY ride_date
+    """
+
+
+def _hourly_metrics_sql() -> str:
+    return """
+    SELECT
+        STRFTIME('%H', request_timestamp) AS ride_hour,
+        COUNT(*) AS ride_count,
+        ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS acceptance_rate,
+        ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS rider_cancel_rate,
+        ROUND(AVG(wait_time_minutes), 2) AS avg_wait_time
+    FROM rides
+    GROUP BY STRFTIME('%H', request_timestamp)
+    ORDER BY ride_hour
+    """
+
+
+def _city_deterioration_sql() -> str:
+    return """
+    WITH city_normal AS (
+        SELECT
+            city,
+            COUNT(*) AS normal_rides,
+            ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS normal_acceptance,
+            ROUND(SUM(ride_completed) * 100.0 / COUNT(*), 2) AS normal_completion,
+            ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS normal_cancel,
+            ROUND(AVG(wait_time_minutes), 2) AS normal_wait,
+            ROUND(AVG(surge_multiplier), 2) AS normal_surge
+        FROM rides
+        WHERE is_high_demand = 0
+        GROUP BY city
+    ),
+    city_high AS (
+        SELECT
+            city,
+            COUNT(*) AS high_rides,
+            ROUND(SUM(was_accepted) * 100.0 / COUNT(*), 2) AS high_acceptance,
+            ROUND(SUM(ride_completed) * 100.0 / COUNT(*), 2) AS high_completion,
+            ROUND(SUM(rider_cancelled) * 100.0 / COUNT(*), 2) AS high_cancel,
+            ROUND(AVG(wait_time_minutes), 2) AS high_wait,
+            ROUND(AVG(surge_multiplier), 2) AS high_surge
+        FROM rides
+        WHERE is_high_demand = 1
+        GROUP BY city
+    )
+    SELECT
+        n.city,
+        n.normal_rides,
+        h.high_rides,
+        n.normal_acceptance,
+        h.high_acceptance,
+        ROUND(h.high_acceptance - n.normal_acceptance, 2) AS acceptance_change,
+        n.normal_completion,
+        h.high_completion,
+        ROUND(h.high_completion - n.normal_completion, 2) AS completion_change,
+        n.normal_cancel,
+        h.high_cancel,
+        ROUND(h.high_cancel - n.normal_cancel, 2) AS cancel_change,
+        n.normal_wait,
+        h.high_wait,
+        ROUND(h.high_wait - n.normal_wait, 2) AS wait_change,
+        n.normal_surge,
+        h.high_surge,
+        ROUND(h.high_surge - n.normal_surge, 2) AS surge_change
+    FROM city_normal n
+    JOIN city_high h ON n.city = h.city
+    ORDER BY cancel_change DESC
+    """

@@ -90,7 +90,7 @@
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
 | 41 | Set Up SQL Database Integration | [#41](https://github.com/kalviumcommunity/Roadies-CityRide/issues/41) | Completed | — | [#86](https://github.com/kalviumcommunity/Roadies-CityRide/pull/86) |
-| 42 | Design SQL Business Metrics Queries | [#42](https://github.com/kalviumcommunity/Roadies-CityRide/issues/42) | Available | — | — |
+| 42 | Design SQL Business Metrics Queries | [#42](https://github.com/kalviumcommunity/Roadies-CityRide/issues/42) | Completed | — | [#87](https://github.com/kalviumcommunity/Roadies-CityRide/pull/87) |
 | 43 | Build SQL Joins, Window Functions, and Advanced Analysis | [#43](https://github.com/kalviumcommunity/Roadies-CityRide/issues/43) | Available | — | — |
 | 44 | Optimise SQL Queries and Build Aggregation Views | [#44](https://github.com/kalviumcommunity/Roadies-CityRide/issues/44) | Available | — | — |
 | 45 | Validate SQL Results Against Python Analysis | [#45](https://github.com/kalviumcommunity/Roadies-CityRide/issues/45) | Available | — | — |

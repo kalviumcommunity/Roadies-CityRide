@@ -93,7 +93,7 @@
 | 42 | Design SQL Business Metrics Queries | [#42](https://github.com/kalviumcommunity/Roadies-CityRide/issues/42) | Completed | — | [#87](https://github.com/kalviumcommunity/Roadies-CityRide/pull/87) |
 | 43 | Build SQL Joins, Window Functions, and Advanced Analysis | [#43](https://github.com/kalviumcommunity/Roadies-CityRide/issues/43) | Completed | — | [#88](https://github.com/kalviumcommunity/Roadies-CityRide/pull/88) |
 | 44 | Optimise SQL Queries and Build Aggregation Views | [#44](https://github.com/kalviumcommunity/Roadies-CityRide/issues/44) | Completed | — | [#89](https://github.com/kalviumcommunity/Roadies-CityRide/pull/89) |
-| 45 | Validate SQL Results Against Python Analysis | [#45](https://github.com/kalviumcommunity/Roadies-CityRide/issues/45) | Available | — | — |
+| 45 | Validate SQL Results Against Python Analysis | [#45](https://github.com/kalviumcommunity/Roadies-CityRide/issues/45) | Completed | — | [#90](https://github.com/kalviumcommunity/Roadies-CityRide/pull/90) |
 
 ## Phase H — Visual Product (Issues #46–#48)
 

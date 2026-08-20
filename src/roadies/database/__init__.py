@@ -619,3 +619,84 @@ def _city_deviation_sql() -> str:
     CROSS JOIN global_avg g
     ORDER BY cancel_vs_avg DESC
     """
+
+
+# ---------------------------------------------------------------------------
+# View-based queries
+# ---------------------------------------------------------------------------
+
+VIEWS_PATH = Path("sql/views")
+
+
+def create_views(
+    db_path: Path | str = DEFAULT_DB_PATH,
+    views_path: Path | str = VIEWS_PATH,
+) -> None:
+    """Create database views from SQL files.
+
+    Parameters
+    ----------
+    db_path:
+        Path to SQLite database.
+    views_path:
+        Path to SQL views directory.
+    """
+    views_path = Path(views_path)
+    sql_file = views_path / "analytics_views.sql"
+
+    if sql_file.exists():
+        sql = sql_file.read_text()
+        with get_connection(db_path) as conn:
+            conn.executescript(sql)
+
+
+def query_view(
+    view_name: str,
+    db_path: Path | str = DEFAULT_DB_PATH,
+    where: str | None = None,
+    limit: int | None = None,
+) -> pd.DataFrame:
+    """Query a database view.
+
+    Parameters
+    ----------
+    view_name:
+        Name of the view to query.
+    db_path:
+        Path to SQLite database.
+    where:
+        Optional WHERE clause.
+    limit:
+        Optional LIMIT.
+
+    Returns
+    -------
+    pd.DataFrame
+        Query results.
+    """
+    sql = f"SELECT * FROM {view_name}"
+    if where:
+        sql += f" WHERE {where}"
+    if limit:
+        sql += f" LIMIT {limit}"
+    return query(sql, db_path)
+
+
+def get_view_list(db_path: Path | str = DEFAULT_DB_PATH) -> list[str]:
+    """List all views in the database.
+
+    Parameters
+    ----------
+    db_path:
+        Path to SQLite database.
+
+    Returns
+    -------
+    list[str]
+        View names.
+    """
+    result = query(
+        "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name",
+        db_path,
+    )
+    return result["name"].tolist()

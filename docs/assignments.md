@@ -108,7 +108,7 @@
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
 | 49 | Build Alert Monitoring and Automated Pipeline Execution | [#49](https://github.com/kalviumcommunity/Roadies-CityRide/issues/49) | Completed | — | [#94](https://github.com/kalviumcommunity/Roadies-CityRide/pull/94) |
-| 50 | Deliver Final Integrated Data Product with Documentation | [#50](https://github.com/kalviumcommunity/Roadies-CityRide/issues/50) | Available | — | — |
+| 50 | Deliver Final Integrated Data Product with Documentation | [#50](https://github.com/kalviumcommunity/Roadies-CityRide/issues/50) | Completed | — | [#95](https://github.com/kalviumcommunity/Roadies-CityRide/pull/95) |
 
 ---
 

@@ -43,6 +43,9 @@ uv run python -c "import roadies; print(roadies.__file__)"
 
 # Run tests
 uv run pytest
+
+# Run the dashboard
+uv run streamlit run dashboard/app.py
 ```
 
 The Python package lives in `src/roadies/`.

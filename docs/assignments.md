@@ -100,7 +100,7 @@
 | # | Assignment | Issue | Status | Assignee | PR |
 |---|---|---|---|---|---|
 | 46 | Apply Business Visualisation Principles and Plotly Charts | [#46](https://github.com/kalviumcommunity/Roadies-CityRide/issues/46) | Completed | — | [#91](https://github.com/kalviumcommunity/Roadies-CityRide/pull/91) |
-| 47 | Design KPI Cards and Summary Metrics | [#47](https://github.com/kalviumcommunity/Roadies-CityRide/issues/47) | Available | — | — |
+| 47 | Design KPI Cards and Summary Metrics | [#47](https://github.com/kalviumcommunity/Roadies-CityRide/issues/47) | Completed | — | [#92](https://github.com/kalviumcommunity/Roadies-CityRide/pull/92) |
 | 48 | Build Streamlit Dashboard with Filters and Navigation | [#48](https://github.com/kalviumcommunity/Roadies-CityRide/issues/48) | Available | — | — |
 
 ## Phase I — Productionization (Issues #49–#50)

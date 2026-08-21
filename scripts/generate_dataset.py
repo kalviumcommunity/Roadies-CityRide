@@ -57,6 +57,13 @@ def main() -> None:
     print(f"Cities: {df['city'].unique().tolist()}")
     print(f"Date range: {df['request_timestamp'].min()} to {df['request_timestamp'].max()}")
 
+    # Also copy to data/raw for pipeline compatibility
+    raw_path = settings.raw_data_dir / "rides.csv"
+    if output_path != raw_path:
+        raw_path.parent.mkdir(parents=True, exist_ok=True)
+        df.to_csv(raw_path, index=False)
+        print(f"Copied to {raw_path}")
+
 
 if __name__ == "__main__":
     main()

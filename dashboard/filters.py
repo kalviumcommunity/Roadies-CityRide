@@ -5,10 +5,13 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
+from dashboard.components import render_sidebar_brand, render_sidebar_status
+
 
 def render_sidebar_filters(df: pd.DataFrame) -> dict:
     """Render sidebar filters and return selected values."""
-    st.sidebar.header("Filters")
+    render_sidebar_brand()
+    st.sidebar.markdown("<div class='roadies-eyebrow'>LIVE FILTERS</div>", unsafe_allow_html=True)
 
     # City filter
     cities = sorted(df["city"].unique()) if not df.empty else []
@@ -34,6 +37,9 @@ def render_sidebar_filters(df: pd.DataFrame) -> dict:
         )
     else:
         surge_range = (1.0, 3.0)
+
+    st.sidebar.divider()
+    render_sidebar_status()
 
     return {
         "cities": selected_cities,

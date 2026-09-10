@@ -34,7 +34,7 @@ class DatetimeTransformReport:
     derived_columns_created: list[str] = field(default_factory=list)
     timezone: str = TIMEZONE
 
-    def summary(self) -> str:
+    def summary(self) -> str: 
         lines = [
             "Datetime Transform Report",
             f"Total rows: {self.total_rows}",

@@ -4,11 +4,14 @@ from __future__ import annotations
 
 import streamlit as st
 
+from dashboard.components import render_chart, render_page_header, render_section_header
 from dashboard.data_loader import filter_dataframe, load_dashboard_data
 from dashboard.filters import render_sidebar_filters
+from dashboard.theme import apply_theme
 from roadies.visualization import plot_city_heatmap, plot_city_metric, plot_demand_supply_relationship
 
 st.set_page_config(page_title="City Analysis", page_icon="🏙️", layout="wide")
+apply_theme()
 
 df = load_dashboard_data()
 
@@ -29,8 +32,14 @@ if filtered.empty:
     st.info("No matching data for selected filters.")
     st.stop()
 
+render_page_header(
+    "CITY INTELLIGENCE",
+    "Market health comparison",
+    "Compare operational health across Roadies CityRide markets.",
+)
+
 # City summary
-st.header("City Performance Summary")
+render_section_header("MARKET SCORECARD", "City performance summary")
 city_df = filtered.groupby("city").agg({
     "was_accepted": "mean",
     "rider_cancelled": "mean",
@@ -40,22 +49,27 @@ city_df = filtered.groupby("city").agg({
 city_df.columns = ["city", "acceptance_rate", "rider_cancel_rate", "avg_wait_time", "avg_surge"]
 city_df[["acceptance_rate", "rider_cancel_rate"]] *= 100
 
-st.dataframe(city_df.style.highlight_max(axis=0), use_container_width=True)
+display_df = city_df.rename(columns={
+    "city": "City", "acceptance_rate": "Acceptance Rate", "rider_cancel_rate": "Rider Cancel Rate",
+    "avg_wait_time": "Avg Wait", "avg_surge": "Avg Surge",
+})
+display_df["Acceptance Rate"] = display_df["Acceptance Rate"].map(lambda value: f"{value:.1f}%")
+display_df["Rider Cancel Rate"] = display_df["Rider Cancel Rate"].map(lambda value: f"{value:.1f}%")
+display_df["Avg Wait"] = display_df["Avg Wait"].map(lambda value: f"{value:.2f} min")
+display_df["Avg Surge"] = display_df["Avg Surge"].map(lambda value: f"{value:.2f}x")
+st.dataframe(display_df, use_container_width=True, hide_index=True)
 
 # Heatmap
-st.header("Performance Heatmap")
-fig = plot_city_heatmap(city_df)
-st.plotly_chart(fig, use_container_width=True)
+render_section_header("PERFORMANCE MAP", "Operational health heatmap")
+render_chart(plot_city_heatmap(city_df), height=360)
 
 # Individual metrics
-st.header("Metric Comparison")
+render_section_header("METRIC EXPLORER", "Compare one operating signal")
 metrics = ["acceptance_rate", "rider_cancel_rate", "avg_wait_time", "avg_surge"]
 selected_metric = st.selectbox("Select Metric", options=metrics, format_func=lambda x: x.replace("_", " ").title())
 
-fig = plot_city_metric(city_df, selected_metric)
-st.plotly_chart(fig, use_container_width=True)
+render_chart(plot_city_metric(city_df, selected_metric), height=330)
 
 # Demand/supply relationship
-st.header("Demand/Supply Relationship")
-fig = plot_demand_supply_relationship(filtered.sample(min(500, len(filtered))))
-st.plotly_chart(fig, use_container_width=True)
+render_section_header("PRESSURE SIGNAL", "Demand versus supply")
+render_chart(plot_demand_supply_relationship(filtered.sample(min(500, len(filtered)), random_state=42)), height=360)

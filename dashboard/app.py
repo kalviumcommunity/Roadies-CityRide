@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import streamlit as st
 
+from dashboard.theme import apply_theme
+
 st.set_page_config(
     page_title="Roadies-CityRide Analytics",
     page_icon="🚗",
@@ -11,7 +13,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.title("Roadies-CityRide Analytics Dashboard")
+apply_theme()
+
+st.markdown(
+    """
+    <section class="roadies-hero">
+        <div class="roadies-eyebrow">Operations intelligence</div>
+        <h1>Roadies-CityRide</h1>
+        <p>Rider experience analytics for high-demand city-hours.</p>
+    </section>
+    """,
+    unsafe_allow_html=True,
+)
 
 st.markdown("""
 Welcome to the **Roadies-CityRide Analytics Dashboard**.

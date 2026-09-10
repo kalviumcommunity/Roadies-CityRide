@@ -2,14 +2,24 @@
 
 from __future__ import annotations
 
-import numpy as np
+import pandas as pd
+import plotly.express as px
 import streamlit as st
 
+from dashboard.components import (
+    friendly_metric,
+    render_chart,
+    render_metric_cards,
+    render_page_header,
+    render_section_header,
+)
 from dashboard.data_loader import filter_dataframe, load_dashboard_data
 from dashboard.filters import render_sidebar_filters
+from dashboard.theme import apply_theme
 from roadies.analysis.anomaly import classify_risk, detect_anomalies
 
 st.set_page_config(page_title="Risk & Anomalies", page_icon="⚠️", layout="wide")
+apply_theme()
 
 df = load_dashboard_data()
 
@@ -31,46 +41,73 @@ if filtered.empty:
     st.stop()
 
 # Anomaly detection
-st.header("Anomaly Detection")
-anomalies = detect_anomalies(filtered)
-st.write(f"Detected **{len(anomalies)}** anomalous periods")
+render_page_header(
+    "RISK & ANOMALIES",
+    "Operational risk monitor",
+    "Detect abnormal demand, supply, and rider-experience patterns.",
+)
 
-if not anomalies.empty:
-    st.dataframe(anomalies.head(20), use_container_width=True)
+anomalies = detect_anomalies(filtered)
+high_surge_count = int((filtered["surge_multiplier"] > 2.0).sum()) if "surge_multiplier" in filtered else 0
+long_wait_count = int((filtered["wait_time_minutes"] > 15).sum()) if "wait_time_minutes" in filtered else 0
+cancel_rate = filtered["rider_cancelled"].mean() * 100 if "rider_cancelled" in filtered else 0.0
+
+render_section_header("ANOMALY SUMMARY", "Signals requiring attention")
+render_metric_cards([
+    ("Anomalous Periods", f"{len(anomalies):,}", "Detected by the analysis engine"),
+    ("High Surge Rides", f"{high_surge_count:,}", "Surge multiplier above 2.0x"),
+    ("Long Wait Rides", f"{long_wait_count:,}", "Wait time above 15 minutes"),
+    ("Overall Cancel Rate", f"{cancel_rate:.1f}%", "Rider cancellations in selection"),
+])
+
+anomaly_df = pd.DataFrame([anomaly.__dict__ for anomaly in anomalies])
+if not anomaly_df.empty:
+    render_section_header("ANOMALY LOG", "Most significant detected periods")
+    anomaly_display = anomaly_df.rename(columns={
+        "metric": "Metric", "value": "Observed Value", "baseline": "Baseline",
+        "deviation": "Deviation", "relative_deviation": "Relative Deviation",
+        "anomaly_type": "Type", "city": "City", "severity": "Severity",
+    })
+    anomaly_display["Metric"] = anomaly_display["Metric"].map(friendly_metric)
+    for column in ["Observed Value", "Baseline", "Deviation"]:
+        anomaly_display[column] = anomaly_display[column].map(lambda value: f"{value:.2f}")
+    anomaly_display["Relative Deviation"] = anomaly_display["Relative Deviation"].map(lambda value: f"{value * 100:.1f}%")
+    anomaly_display["Severity"] = anomaly_display["Severity"].str.upper()
+    st.dataframe(anomaly_display.head(20), use_container_width=True, hide_index=True)
 
 # Risk classification
-st.header("Operational Risk by City")
+render_section_header("CITY RISK MATRIX", "Operational risk by city")
 risk_df = classify_risk(filtered)
 
 if not risk_df.empty:
     if "risk_level" in risk_df.columns:
         risk_counts = risk_df.groupby(["city", "risk_level"]).size().reset_index(name="count")
-        st.dataframe(risk_counts, use_container_width=True)
+        risk_matrix = risk_counts.pivot(index="city", columns="risk_level", values="count").fillna(0).astype(int)
+        for level in ["normal", "elevated", "high", "critical"]:
+            if level not in risk_matrix:
+                risk_matrix[level] = 0
+        risk_matrix = risk_matrix[["normal", "elevated", "high", "critical"]].reset_index()
+        risk_matrix.columns = ["City", "Normal", "Elevated", "High", "Critical"]
+        st.dataframe(risk_matrix, use_container_width=True, hide_index=True)
 
-        # Risk distribution
-        st.subheader("Risk Level Distribution")
-        for city in risk_df["city"].unique():
-            city_risk = risk_df[risk_df["city"] == city]
-            if "risk_level" in city_risk.columns:
-                risk_counts = city_risk["risk_level"].value_counts()
-                st.write(f"**{city}**: {dict(risk_counts)}")
-
-# High-risk indicators
-st.header("High-Risk Indicators")
-if "surge_multiplier" in filtered.columns:
-    high_surge = filtered[filtered["surge_multiplier"] > 2.0]
-    st.metric("High Surge Rides (>2×)", f"{len(high_surge):,}")
-
-if "rider_cancelled" in filtered.columns:
-    cancel_rate = filtered["rider_cancelled"].mean() * 100
-    st.metric("Overall Cancel Rate", f"{cancel_rate:.1f}%")
-
-if "wait_time_minutes" in filtered.columns:
-    long_wait = filtered[filtered["wait_time_minutes"] > 15]
-    st.metric("Long Wait Rides (>15 min)", f"{len(long_wait):,}")
+        render_section_header("DISTRIBUTION", "Risk level distribution")
+        chart_df = risk_counts.copy()
+        chart_df["risk_level"] = chart_df["risk_level"].str.title()
+        fig = px.bar(
+            chart_df,
+            x="count",
+            y="city",
+            color="risk_level",
+            orientation="h",
+            barmode="stack",
+            category_orders={"risk_level": ["Normal", "Elevated", "High", "Critical"]},
+            color_discrete_map={"Normal": "#22C55E", "Elevated": "#F59A2F", "High": "#F97316", "Critical": "#EF4444"},
+            labels={"count": "Observations", "city": "City", "risk_level": "Risk Level"},
+        )
+        render_chart(fig, height=380)
 
 # City risk ranking
-st.header("City Risk Ranking")
+render_section_header("PRIORITIZATION", "City risk ranking")
 if "city" in filtered.columns:
     city_risk = filtered.groupby("city").agg({
         "surge_multiplier": "mean",
@@ -82,4 +119,13 @@ if "city" in filtered.columns:
     city_risk["risk_score"] = city_risk["avg_surge"] + city_risk["cancel_rate"] / 10 + city_risk["avg_wait"] / 10
     city_risk = city_risk.sort_values("risk_score", ascending=False)
 
-    st.dataframe(city_risk, use_container_width=True)
+    city_display = city_risk.rename(columns={
+        "city": "City", "avg_surge": "Avg Surge", "cancel_rate": "Cancel Rate",
+        "avg_wait": "Avg Wait", "risk_score": "Risk Score",
+    })
+    city_display["Avg Surge"] = city_display["Avg Surge"].map(lambda value: f"{value:.2f}x")
+    city_display["Cancel Rate"] = city_display["Cancel Rate"].map(lambda value: f"{value:.1f}%")
+    city_display["Avg Wait"] = city_display["Avg Wait"].map(lambda value: f"{value:.2f} min")
+    city_display["Risk Score"] = city_display["Risk Score"].map(lambda value: f"{value:.2f}")
+    city_display.insert(0, "Rank", range(1, len(city_display) + 1))
+    st.dataframe(city_display, use_container_width=True, hide_index=True)

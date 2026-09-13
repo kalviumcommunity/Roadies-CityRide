@@ -123,7 +123,7 @@ def render_chart(fig: go.Figure, height: int | None = None) -> None:
     fig = apply_plotly_theme(fig)
     if height:
         fig.update_layout(height=height)
-    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
 
 def render_status_badge(value: str) -> str:
@@ -139,7 +139,7 @@ def render_styled_table(df: pd.DataFrame, percent_columns: list[str] | None = No
     for column in percent_columns or []:
         if column in display:
             display[column] = display[column].map(lambda value: f"{value:.1f}%")
-    st.dataframe(display, use_container_width=True, hide_index=True)
+    st.dataframe(display, width="stretch", hide_index=True)
 
 
 def friendly_metric(name: str) -> str:

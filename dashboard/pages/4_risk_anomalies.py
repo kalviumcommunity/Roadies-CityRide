@@ -73,7 +73,7 @@ if not anomaly_df.empty:
         anomaly_display[column] = anomaly_display[column].map(lambda value: f"{value:.2f}")
     anomaly_display["Relative Deviation"] = anomaly_display["Relative Deviation"].map(lambda value: f"{value * 100:.1f}%")
     anomaly_display["Severity"] = anomaly_display["Severity"].str.upper()
-    st.dataframe(anomaly_display.head(20), use_container_width=True, hide_index=True)
+    st.dataframe(anomaly_display.head(20), width="stretch", hide_index=True)
 
 # Risk classification
 render_section_header("CITY RISK MATRIX", "Operational risk by city")
@@ -88,7 +88,7 @@ if not risk_df.empty:
                 risk_matrix[level] = 0
         risk_matrix = risk_matrix[["normal", "elevated", "high", "critical"]].reset_index()
         risk_matrix.columns = ["City", "Normal", "Elevated", "High", "Critical"]
-        st.dataframe(risk_matrix, use_container_width=True, hide_index=True)
+        st.dataframe(risk_matrix, width="stretch", hide_index=True)
 
         render_section_header("DISTRIBUTION", "Risk level distribution")
         chart_df = risk_counts.copy()
@@ -128,4 +128,4 @@ if "city" in filtered.columns:
     city_display["Avg Wait"] = city_display["Avg Wait"].map(lambda value: f"{value:.2f} min")
     city_display["Risk Score"] = city_display["Risk Score"].map(lambda value: f"{value:.2f}")
     city_display.insert(0, "Rank", range(1, len(city_display) + 1))
-    st.dataframe(city_display, use_container_width=True, hide_index=True)
+    st.dataframe(city_display, width="stretch", hide_index=True)

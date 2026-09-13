@@ -57,7 +57,7 @@ display_df["Acceptance Rate"] = display_df["Acceptance Rate"].map(lambda value: 
 display_df["Rider Cancel Rate"] = display_df["Rider Cancel Rate"].map(lambda value: f"{value:.1f}%")
 display_df["Avg Wait"] = display_df["Avg Wait"].map(lambda value: f"{value:.2f} min")
 display_df["Avg Surge"] = display_df["Avg Surge"].map(lambda value: f"{value:.2f}x")
-st.dataframe(display_df, use_container_width=True, hide_index=True)
+st.dataframe(display_df, width="stretch", hide_index=True)
 
 # Heatmap
 render_section_header("PERFORMANCE MAP", "Operational health heatmap")
